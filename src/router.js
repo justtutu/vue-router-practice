@@ -1,17 +1,51 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-
+import Layout from './views/Layout';
+import Icon from './views/Icon';
+import Button from './views/Button';
+import Radio from './components/form/Radio';
+import Form from './views/Form';
+import CheckBox from './components/form/CheckBox';
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes: [
-    {
+  routes: [{
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      children: [{
+          path: 'layout',
+          name: 'layout',
+          component: Layout
+        },
+        {
+          path: 'icon',
+          name: 'icon',
+          component: Icon
+        },
+        {
+          path: 'button',
+          name: 'button',
+          component: Button
+        },
+        {
+          path: 'form',
+          name: 'form',
+          component: Form,
+          children: [{
+            path: 'radio',
+            name: 'radio',
+            component: Radio
+          }, {
+            path: 'checkbox',
+            name: 'checkbox',
+            component: CheckBox
+          }]
+        }
+      ]
     },
     {
       path: '/about',
@@ -19,7 +53,8 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      component: () =>
+        import( /* webpackChunkName: "about" */ './views/About.vue')
     }
   ]
 })
